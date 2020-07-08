@@ -1,16 +1,21 @@
 # Angular Mentions
+Forked from https://github.com/dmacfarlane/angular-mentions.
 
 Simple Angular mentions inspired by [Ment.io](https://github.com/jeff-collins/ment.io).
 
 [Click here for a Demo](http://dmacfarlane.github.io/angular-mentions/)
 
 Provides auto-complete suggestions for @mentions in text input fields, text areas,
-and content editable fields.
+and content editable fields. Not fully browser tested and comes without warranty!
+
+The installation and usage are still the same.
+The instructions below are still the same as in dmacfarlane/angular-mentions.
+The differences are in the additional optional config.
 
 To install and start the demo application:
 
-    git clone https://github.com/dmacfarlane/angular-mentions.git
-    cd angular-mentions
+    git clone https://github.com/crystalyutiamco/angular-social-mentions.git
+    cd angular-social-mentions
     npm install
     ng serve
 
@@ -18,12 +23,12 @@ To install and start the demo application:
 
 Add the package as a dependency to your project using:
 
-    npm install angular-mentions
+    npm install angular-social-mentions
 
 Add the module to your app.module imports:
 
 ```typescript
-import { MentionModule } from 'angular-mentions';
+import { MentionModule } from 'angular-social-mentions';
 ...
 
 @NgModule({
@@ -60,6 +65,8 @@ The following optional configuration items can be used.
 | mentionSelect |          | A function to format the selected item before inserting the text. |
 | allowSpace    | false    | Allow spaces while mentioning. |
 | returnTrigger | false    | Include the trigger char in the searchTerm event. |
+| useMention | false    | Specify true if you want to use data from [mention] property instead of items array in this config. |
+| disableTemplate | false    | Option to disable usage of [mentionTemplate] for this config. |
 
 For Example: 
 
@@ -73,10 +80,9 @@ The following output events can be used.
 
 | Output        | Description |
 | ---           | ---         |
-| `@Output() searchTerm EventEmitter<string>` | Emitted whenever the search term changes. Can be used to trigger async search.
-| `@Output() itemSelected EventEmitter<any>` | Emitted when an item is selected.
-| `@Output() opened EventEmitter<void>`  | Emitted when the mentions panel is opened.
-| `@Output() closed EventEmitter<void>`  | Emitted when the mentions panel is closed.
+| `@Output() serchTerm EventEmitter<string>` | Event that is emitted whenever the search term changes. Can be used to trigger async search.
+| `@Output() opened EventEmitter<void>`  | Event that is emitted when the mentions panel is opened.
+| `@Output() closed EventEmitter<void>`  | Event that is emitted when the mentions panel is closed.
 
 ### Alternative Usage
 
@@ -114,4 +120,4 @@ let mentionConfig = {
 ```
 This allows different lists and trigger characters to be configured.
 
-Note that becuase objects are mutable, changes to the items within the config will not be picked up unless a new mentionConfig object is created.
+Note that because objects are mutable, changes to the items within the config will not be picked up unless a new mentionConfig object is created.
