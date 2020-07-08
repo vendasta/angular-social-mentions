@@ -3,9 +3,12 @@
 export interface MentionConfig extends Mentions {
   // nested config
   mentions?:Mentions[];
-  
+
   // option to disable encapsulated styles so global styles can be used instead
-  disableStyle?:boolean;  
+  disableStyle?:boolean;
+
+  // option to only use config in mentions array and discard outer config
+  useNestedConfig?:boolean;
 }
 
 export interface Mentions {
@@ -39,4 +42,10 @@ export interface Mentions {
 
   // optional function to format the selected item before inserting the text
   mentionSelect?:(item: any, triggerChar?:string) => (string);
+
+  // use data from [mention] directive instead of items
+  useMention?: boolean;
+
+  // option to disable usage of [mentionTemplate]
+  disableTemplate?: boolean;
 }

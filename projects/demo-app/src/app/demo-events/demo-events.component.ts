@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { COMMON_NAMES } from '../common-names';
-import { MentionConfig } from 'projects/angular-mentions/src/public-api';
+import { MentionConfig } from 'projects/angular-social-mentions/src/public-api';
 
 @Component({
   selector: 'app-demo-events',
@@ -16,7 +16,7 @@ export class DemoEventsComponent {
     this.log('Ready...');
   }
   log(s:string, e?:any) {
-    this.output = new Date().toISOString() + ' ' + 
+    this.output = new Date().toISOString() + ' ' +
       s + (e ? ' ' + JSON.stringify(e) : '') + '\n' + this.output;
   }
   updateConfig(e) {

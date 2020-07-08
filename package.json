@@ -1,6 +1,6 @@
 {
-  "name": "angular-mentions",
-  "version": "0.0.0",
+  "name": "angular-social-mentions",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

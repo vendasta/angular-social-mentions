@@ -3,7 +3,7 @@ import { element, by, protractor, browser, ElementFinder } from 'protractor';
 import { AngularMentionsPage } from './app.po';
 import { DemoEventsPage } from './demo-events.po';
 
-describe('angular-mentions events', function() {
+describe('angular-social-mentions events', function() {
   let appPage: AngularMentionsPage;
   let demoPage: DemoEventsPage;
   let input: ElementFinder;
