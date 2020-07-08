@@ -3,38 +3,38 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "angular-mentions": {
-      "root": "projects/angular-mentions",
-      "sourceRoot": "projects/angular-mentions/src",
+    "angular-social-mentions": {
+      "root": "projects/angular-social-mentions",
+      "sourceRoot": "projects/angular-social-mentions/src",
       "projectType": "library",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/angular-mentions/tsconfig.lib.json",
-            "project": "projects/angular-mentions/ng-package.json"
+            "tsConfig": "projects/angular-social-mentions/tsconfig.lib.json",
+            "project": "projects/angular-social-mentions/ng-package.json"
           }
         ,          "configurations": {
             "production": {
-              "tsConfig": "projects/angular-mentions/tsconfig.lib.prod.json"
+              "tsConfig": "projects/angular-social-mentions/tsconfig.lib.prod.json"
             }
           }
 },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/angular-mentions/src/test.ts",
-            "tsConfig": "projects/angular-mentions/tsconfig.spec.json",
-            "karmaConfig": "projects/angular-mentions/karma.conf.js"
+            "main": "projects/angular-social-mentions/src/test.ts",
+            "tsConfig": "projects/angular-social-mentions/tsconfig.spec.json",
+            "karmaConfig": "projects/angular-social-mentions/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/angular-mentions/tsconfig.lib.json",
-              "projects/angular-mentions/tsconfig.spec.json"
+              "projects/angular-social-mentions/tsconfig.lib.json",
+              "projects/angular-social-mentions/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -177,5 +177,5 @@
       }
     }
   },
-  "defaultProject": "angular-mentions"
+  "defaultProject": "angular-social-mentions"
 }

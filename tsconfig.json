@@ -20,11 +20,11 @@
       "dom"
     ],
     "paths": {
-      "angular-mentions": [
-        "dist/angular-mentions"
+      "angular-social-mentions": [
+        "dist/angular-social-mentions"
       ],
-      "angular-mentions/*": [
-        "dist/angular-mentions/*"
+      "angular-social-mentions/*": [
+        "dist/angular-social-mentions/*"
       ],
       "mention": [
         "dist/mention"

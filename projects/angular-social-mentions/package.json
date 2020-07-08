@@ -1,0 +1,22 @@
+{
+  "name": "angular-social-mentions",
+  "version": "1.0.0",
+
+  "description": "Angular mentions from Dmacfarlane - angular-mentions. Updated version of angular-mentions with modified configuration options for displaying list of items and more.",
+  "keywords": [
+    "angular",
+    "mention",
+    "autocomplete"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/crystalyutiamco/angular-social-mentions.git"
+  },
+  "author": "Crystal Yutiamco",
+  "license": "MIT",
+
+  "peerDependencies": {
+    "@angular/common": ">=7.2.0",
+    "@angular/core": ">=7.2.0"
+  }
+}

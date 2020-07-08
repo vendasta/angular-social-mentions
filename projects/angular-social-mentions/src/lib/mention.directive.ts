@@ -99,10 +99,18 @@ export class MentionDirective implements OnChanges {
     if (this.mentionItems) {
       config.items = this.mentionItems;
     }
-    this.addConfig(config);
+    if (!config.useNestedConfig) {
+      this.addConfig(config);
+    }
+
     // nested configs
     if (config.mentions) {
-      config.mentions.forEach(config => this.addConfig(config));
+      config.mentions.forEach(config => {
+        if (config.useMention) {
+          config.items = this.mentionItems;
+        }
+        return this.addConfig(config)
+      });
     }
   }
 
@@ -292,7 +300,7 @@ export class MentionDirective implements OnChanges {
           if (this.activeConfig.returnTrigger) {
             const triggerChar = (this.searchString || event.keyCode === KEY_BACKSPACE) ? val.substring(this.startPos, this.startPos + 1) : '';
             this.searchTerm.emit(triggerChar + this.searchString);
-          } 
+          }
           else {
             this.searchTerm.emit(this.searchString);
           }
@@ -347,13 +355,13 @@ export class MentionDirective implements OnChanges {
       let componentFactory = this._componentResolver.resolveComponentFactory(MentionListComponent);
       let componentRef = this._viewContainerRef.createComponent(componentFactory);
       this.searchList = componentRef.instance;
-      this.searchList.itemTemplate = this.mentionListTemplate;
       componentRef.instance['itemClick'].subscribe(() => {
         nativeElement.focus();
         let fakeKeydown = { key: 'Enter', keyCode: KEY_ENTER, wasClick: true };
         this.keyHandler(fakeKeydown, nativeElement);
       });
     }
+    this.searchList.itemTemplate = this.activeConfig.disableTemplate ? null : this.mentionListTemplate;
     this.searchList.labelKey = this.activeConfig.labelKey;
     this.searchList.dropUp = this.activeConfig.dropUp;
     this.searchList.styleOff = this.mentionConfig.disableStyle;

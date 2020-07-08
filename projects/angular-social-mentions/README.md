@@ -23,7 +23,7 @@ Add the package as a dependency to your project using:
 Add the module to your app.module imports:
 
 ```typescript
-import { MentionModule } from 'angular-mentions';
+import { MentionModule } from 'angular-social-mentions';
 ...
 
 @NgModule({
