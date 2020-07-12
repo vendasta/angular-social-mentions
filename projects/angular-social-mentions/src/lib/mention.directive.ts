@@ -105,10 +105,15 @@ export class MentionDirective implements OnChanges {
 
     // nested configs
     if (config.mentions) {
+      const activeTriggerConfig: string = this.activeConfig ? this.activeConfig.triggerChar : null;
+
       config.mentions.forEach(config => {
-        if (config.useMention) {
+        if (config.useMention && activeTriggerConfig) {
+          config.items = config.triggerChar === activeTriggerConfig ? this.mentionItems : [];
+        } else if (config.useMention && !activeTriggerConfig) {
           config.items = this.mentionItems;
         }
+
         return this.addConfig(config)
       });
     }
