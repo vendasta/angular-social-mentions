@@ -111,7 +111,7 @@ export class MentionDirective implements OnChanges {
         if (config.useMention && activeTriggerConfig) {
           config.items = config.triggerChar === activeTriggerConfig ? this.mentionItems : [];
         } else if (config.useMention && !activeTriggerConfig) {
-          config.items = this.mentionItems;
+          config.items = [];
         }
 
         return this.addConfig(config)
