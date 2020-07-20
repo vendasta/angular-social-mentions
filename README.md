@@ -67,6 +67,7 @@ The following optional configuration items can be used.
 | returnTrigger | false    | Include the trigger char in the searchTerm event. |
 | useMention | false    | Specify true if you want to use data from [mention] property instead of items array in this config. |
 | disableTemplate | false    | Option to disable usage of [mentionTemplate] for this config. |
+| emptyItemsOnClose | false    | Option to set the item list to [] after drop down closes. |
 
 For Example: 
 

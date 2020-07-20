@@ -328,6 +328,9 @@ export class MentionDirective implements OnChanges {
       this.searchList.hidden = true;
       this.closed.emit();
     }
+    if (this.activeConfig && this.activeConfig.emptyItemsOnClose) {
+      this.activeConfig.items = [];
+    }
     this.activeConfig = null;
     this.searching = false;
   }

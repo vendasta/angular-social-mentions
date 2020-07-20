@@ -48,4 +48,7 @@ export interface Mentions {
 
   // option to disable usage of [mentionTemplate]
   disableTemplate?: boolean;
+
+  // option to set item list to [] after drop down closes
+  emptyItemsOnClose?: boolean;
 }
