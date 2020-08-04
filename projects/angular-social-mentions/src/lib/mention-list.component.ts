@@ -4,6 +4,7 @@ import {
 
 import { isInputOrTextAreaElement, getContentEditableCaretCoords } from './mention-utils';
 import { getCaretCoordinates } from './caret-coords';
+import {MentionsTab} from "./mention-config";
 
 /**
  * Angular Mentions.
@@ -20,6 +21,18 @@ import { getCaretCoordinates } from './caret-coords';
     </ng-template>
     <ul #list [hidden]="hidden" class="dropdown-menu scrollable-menu"
       [class.mention-menu]="!styleOff" [class.mention-dropdown]="!styleOff && dropUp">
+      <ng-container *ngIf="tabs">
+          <li>
+            <ul class="dropdown-tabs">
+              <li *ngFor="let tab of tabs" [class.active-tab]="activeTab==tab.value">
+                <a (mousedown)="activeTab=tab.value;tabClick.emit(tab.value);$event.preventDefault()">
+                  <img class="tab-icon" [src]="tab.img">
+                </a>
+              </li>
+            </ul>
+          </li>
+      </ng-container>
+
       <li *ngFor="let item of items; let i = index"
         [class.active]="activeIndex==i" [class.mention-active]="!styleOff && activeIndex==i">
         <a class="dropdown-item" [class.mention-item]="!styleOff"
@@ -33,7 +46,9 @@ import { getCaretCoordinates } from './caret-coords';
 export class MentionListComponent implements AfterContentChecked {
   @Input() labelKey: string = 'label';
   @Input() itemTemplate: TemplateRef<any>;
+  @Input() tabs: MentionsTab[];
   @Output() itemClick = new EventEmitter();
+  @Output() tabClick = new EventEmitter();
   @ViewChild('list', { static: true }) list: ElementRef;
   @ViewChild('defaultItemTemplate', { static: true }) defaultItemTemplate: TemplateRef<any>;
   items = [];
@@ -41,6 +56,7 @@ export class MentionListComponent implements AfterContentChecked {
   hidden: boolean = false;
   dropUp: boolean = false;
   styleOff: boolean = false;
+  activeTab: string;
   private coords: {top:number, left:number} = {top:0, left:0};
   private offset: number = 0;
   constructor(private element: ElementRef) {}
@@ -48,6 +64,10 @@ export class MentionListComponent implements AfterContentChecked {
   ngAfterContentChecked() {
     if (!this.itemTemplate) {
       this.itemTemplate = this.defaultItemTemplate;
+    }
+
+    if (!this.activeTab && this.tabs && this.tabs.length > 0) {
+      this.activeTab = this.tabs[0] ? this.tabs[0].value: '';
     }
   }
 

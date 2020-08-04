@@ -1,7 +1,7 @@
-/** 
- * The internal mention styles can be disabled using the configuration setting leading to these 
+/**
+ * The internal mention styles can be disabled using the configuration setting leading to these
  * possible states:
- *  
+ *
  *   bootstrap not present; disableStyle false; (new default - use internal styles)
  *   bootstrap not present; disableStyle true;  (no style - so user can add their own styles)
  *   bootstrap present;     disableStyle true;  (original behavior - use bs styles)
@@ -59,4 +59,28 @@
   bottom: 100%;
   top: auto;
   margin-bottom: 2px;
+}
+
+.tab-icon {
+  height: 32px;
+  width: 32px;
+  margin-bottom: 10px;
+  border-radius: 2px;
+}
+
+.dropdown-tabs {
+  list-style: none;
+  padding: 0;
+  margin-left: 20px;
+  margin-bottom: 8px;
+}
+
+.dropdown-tabs li {
+  display: inline;
+  margin-right: 15px;
+}
+
+.dropdown-tabs .active-tab a {
+  padding-bottom: 10px;
+  border-bottom: 5px solid gray;
 }

@@ -69,6 +69,8 @@ export class MentionDirective implements OnChanges {
   @Output() opened = new EventEmitter();
   @Output() closed = new EventEmitter();
 
+  @Output() mentionsTabSelected = new EventEmitter();
+
   private triggerChars: { [key: string]: MentionConfig } = {};
 
   private searchString: string;
@@ -368,6 +370,10 @@ export class MentionDirective implements OnChanges {
         let fakeKeydown = { key: 'Enter', keyCode: KEY_ENTER, wasClick: true };
         this.keyHandler(fakeKeydown, nativeElement);
       });
+      componentRef.instance['tabClick'].subscribe((val) => {
+        nativeElement.focus();
+        this.mentionsTabSelected.emit(val);
+      });
     }
     this.searchList.itemTemplate = this.activeConfig.disableTemplate ? null : this.mentionListTemplate;
     this.searchList.labelKey = this.activeConfig.labelKey;
@@ -375,6 +381,7 @@ export class MentionDirective implements OnChanges {
     this.searchList.styleOff = this.mentionConfig.disableStyle;
     this.searchList.activeIndex = 0;
     this.searchList.position(nativeElement, this.iframe);
+    this.searchList.tabs = this.activeConfig.tabs;
     window.requestAnimationFrame(() => this.searchList.reset());
   }
 }

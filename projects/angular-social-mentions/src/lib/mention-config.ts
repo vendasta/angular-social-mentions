@@ -51,4 +51,14 @@ export interface Mentions {
 
   // option to set item list to [] after drop down closes
   emptyItemsOnClose?: boolean;
+
+  tabs?: MentionsTab[];
+}
+
+export interface MentionsTab {
+  label: string;
+
+  img?: string;
+
+  value: string;
 }
