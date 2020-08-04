@@ -68,6 +68,7 @@ The following optional configuration items can be used.
 | useMention | false    | Specify true if you want to use data from [mention] property instead of items array in this config. |
 | disableTemplate | false    | Option to disable usage of [mentionTemplate] for this config. |
 | emptyItemsOnClose | false    | Option to set the item list to [] after drop down closes. |
+| tabs |     | An array of tabs to show on top of the dropdown. Layout is currently static. |
 
 For Example: 
 
@@ -84,6 +85,7 @@ The following output events can be used.
 | `@Output() serchTerm EventEmitter<string>` | Event that is emitted whenever the search term changes. Can be used to trigger async search.
 | `@Output() opened EventEmitter<void>`  | Event that is emitted when the mentions panel is opened.
 | `@Output() closed EventEmitter<void>`  | Event that is emitted when the mentions panel is closed.
+| `@Output() mentionsTabSelected EventEmitter<void>`  | Event that is emitted when the a tab is selected.
 
 ### Alternative Usage
 
