@@ -124,3 +124,32 @@ let mentionConfig = {
 This allows different lists and trigger characters to be configured.
 
 Note that because objects are mutable, changes to the items within the config will not be picked up unless a new mentionConfig object is created.
+
+#### Mention Prompt
+
+Instead of displaying a list, you can show a prompt containing a message in the dropdown instead.
+The following inputs can be used to do so.
+
+| Input        | Description |
+| ---           | ---         |
+| `@Input() mentionPromptTemplate: TemplateRef<any>` | Mention prompt template. This is helpful when you want to show a message when a list is empty instead or if you want to show some generic message instead.
+| `@Input() showMentionPrompt: boolean`  | Set this to true if you want to show the message prompt instead of the list.
+
+Sample usage of Mention Prompt:
+
+```html
+<input class="form-control" type="text"
+  [mentionConfig]="mentionConfig"
+  [showMentionPrompt]="showMessageTemplate$ | async"
+  [mentionPromptTemplate]="messageTemplate">
+
+<ng-template #messageTemplate>
+  <div>
+    <span>Sample Mention Prompt</span>
+    <a (mousedown)="onClickThisClick($event);$event.preventDefault()">Click Here</a>
+  </div>
+</ng-template>
+```
+
+
+

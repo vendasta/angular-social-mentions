@@ -19,29 +19,38 @@ import {MentionsTab} from "./mention-config";
     <ng-template #defaultItemTemplate let-item="item">
       {{item[labelKey]}}
     </ng-template>
-    <ul #list [hidden]="hidden" class="dropdown-menu scrollable-menu"
-      [class.mention-menu]="!styleOff" [class.mention-dropdown]="!styleOff && dropUp">
+    <ul #list [hidden]="hidden && !showPrompt" class="dropdown-menu scrollable-menu"
+        [class.mention-menu]="!styleOff" [class.mention-dropdown]="!styleOff && dropUp">
       <ng-container *ngIf="tabs">
-          <li>
-            <ul class="dropdown-tabs">
-              <li *ngFor="let tab of tabs" [class.active-tab]="activeTab==tab.value">
-                <a (mousedown)="activeTab=tab.value;tabClick.emit(tab.value);$event.preventDefault()">
-                  <img class="tab-icon" [src]="tab.img">
-                </a>
-              </li>
-            </ul>
-          </li>
+        <li>
+          <ul class="dropdown-tabs">
+            <li *ngFor="let tab of tabs" [class.active-tab]="activeTab==tab.value">
+              <a (mousedown)="activeTab=tab.value;tabClick.emit(tab.value);$event.preventDefault()">
+                <img class="tab-icon" [src]="tab.img">
+              </a>
+            </li>
+          </ul>
+        </li>
       </ng-container>
 
-      <li *ngFor="let item of items; let i = index"
-        [class.active]="activeIndex==i" [class.mention-active]="!styleOff && activeIndex==i">
-        <a class="dropdown-item" [class.mention-item]="!styleOff"
-          (mousedown)="activeIndex=i;itemClick.emit();$event.preventDefault()">
-          <ng-template [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{'item':item}"></ng-template>
-        </a>
-      </li>
+      <ng-container *ngIf="items && items.length > 0">
+        <li *ngFor="let item of items; let i = index"
+            [class.active]="activeIndex==i" [class.mention-active]="!styleOff && activeIndex==i">
+          <a class="dropdown-item" [class.mention-item]="!styleOff"
+             (mousedown)="activeIndex=i;itemClick.emit();$event.preventDefault()">
+            <ng-template [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{'item':item}"></ng-template>
+          </a>
+        </li>
+      </ng-container>
+
+      <ng-container *ngIf="!(items && items.length > 0) && showPrompt">
+        <li (mousedown)="messageTemplateClick.emit($event);$event.preventDefault()">
+          <ng-template [ngTemplateOutlet]="promptTemplate"></ng-template>
+        </li>
+      </ng-container>
+
     </ul>
-    `
+  `
 })
 export class MentionListComponent implements AfterContentChecked {
   @Input() labelKey: string = 'label';
@@ -49,6 +58,7 @@ export class MentionListComponent implements AfterContentChecked {
   @Input() tabs: MentionsTab[];
   @Output() itemClick = new EventEmitter();
   @Output() tabClick = new EventEmitter();
+  @Output() messageTemplateClick = new EventEmitter();
   @ViewChild('list', { static: true }) list: ElementRef;
   @ViewChild('defaultItemTemplate', { static: true }) defaultItemTemplate: TemplateRef<any>;
   items = [];
@@ -57,6 +67,10 @@ export class MentionListComponent implements AfterContentChecked {
   dropUp: boolean = false;
   styleOff: boolean = false;
   activeTab: string;
+
+  @Input() promptTemplate: TemplateRef<any>;
+  showPrompt: boolean;
+
   private coords: {top:number, left:number} = {top:0, left:0};
   private offset: number = 0;
   constructor(private element: ElementRef) {}

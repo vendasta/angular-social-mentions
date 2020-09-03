@@ -59,6 +59,10 @@ export class MentionDirective implements OnChanges {
   // template to use for rendering list items
   @Input() mentionListTemplate: TemplateRef<any>;
 
+  @Input() showMentionPrompt: boolean;
+
+  @Input() mentionPromptTemplate: TemplateRef<any>;
+
   // event emitted whenever the search term changes
   @Output() searchTerm = new EventEmitter<string>();
 
@@ -292,6 +296,12 @@ export class MentionDirective implements OnChanges {
             this.searchList.activatePreviousItem();
             return false;
           }
+        } else if (this.searchList.showPrompt) {
+          if (event.keyCode === KEY_ESCAPE) {
+            this.stopEvent(event);
+            this.stopSearch();
+            return false;
+          }
         }
 
         if (charPressed.length!=1 && event.keyCode!=KEY_BACKSPACE) {
@@ -330,9 +340,15 @@ export class MentionDirective implements OnChanges {
       this.searchList.hidden = true;
       this.closed.emit();
     }
+
+    if (this.searchList && this.searchList.showPrompt) {
+      this.searchList.showPrompt = false;
+    }
+
     if (this.activeConfig && this.activeConfig.emptyItemsOnClose) {
       this.activeConfig.items = [];
     }
+
     this.activeConfig = null;
     this.searching = false;
   }
@@ -374,6 +390,17 @@ export class MentionDirective implements OnChanges {
         nativeElement.focus();
         this.mentionsTabSelected.emit(val);
       });
+      componentRef.instance['messageTemplateClick'].subscribe((e) => {
+        nativeElement.focus();
+        // right now, we're only closing the dialog when a link is clicked
+        if (e.target.tagName.toLowerCase() === 'a') {
+          this.searchList.hidden = true;
+          this.searchList.showPrompt = false;
+        }
+
+        let fakeKeydown = { key: 'Enter', keyCode: KEY_ENTER, wasClick: true };
+        this.keyHandler(fakeKeydown, nativeElement);
+      });
     }
     this.searchList.itemTemplate = this.activeConfig.disableTemplate ? null : this.mentionListTemplate;
     this.searchList.labelKey = this.activeConfig.labelKey;
@@ -382,6 +409,9 @@ export class MentionDirective implements OnChanges {
     this.searchList.activeIndex = 0;
     this.searchList.position(nativeElement, this.iframe);
     this.searchList.tabs = this.activeConfig.tabs;
+    this.searchList.showPrompt = this.showMentionPrompt;
+    this.searchList.promptTemplate = this.mentionPromptTemplate;
+
     window.requestAnimationFrame(() => this.searchList.reset());
   }
 }
