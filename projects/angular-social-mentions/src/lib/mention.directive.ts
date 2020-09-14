@@ -343,6 +343,7 @@ export class MentionDirective implements OnChanges {
 
     if (this.searchList && this.searchList.showPrompt) {
       this.searchList.showPrompt = false;
+      this.closed.emit();
     }
 
     if (this.activeConfig && this.activeConfig.emptyItemsOnClose) {
@@ -371,6 +372,7 @@ export class MentionDirective implements OnChanges {
     if (this.searchList) {
       this.searchList.items = matches;
       this.searchList.hidden = matches.length == 0;
+      this.searchList.showPrompt = this.showMentionPrompt;
     }
   }
 
