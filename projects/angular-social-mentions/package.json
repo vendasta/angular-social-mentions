@@ -1,5 +1,5 @@
 {
-  "name": "angular-social-mentions",
+  "name": "@vendasta/angular-social-mentions",
   "version": "1.0.5",
 
   "description": "Angular mentions from Dmacfarlane - angular-mentions. Updated version of angular-mentions with modified configuration options for displaying list of items and more.",
@@ -10,9 +10,9 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/crystalyutiamco/angular-social-mentions.git"
+    "url": "https://github.com/vendasta/angular-social-mentions.git"
   },
-  "author": "Crystal Yutiamco",
+  "author": "Vendasta Technologies Inc",
   "license": "MIT",
 
   "peerDependencies": {
