@@ -5,12 +5,10 @@ Simple Angular mentions inspired by [Ment.io](https://github.com/jeff-collins/me
 
 [Click here for a Demo](http://dmacfarlane.github.io/angular-mentions/)
 
-Provides auto-complete suggestions for @mentions in text input fields, text areas,
-and content editable fields. Not fully browser tested and comes without warranty!
+This package provides auto-complete suggestions for @mentions in text input fields, text areas,
+and content editable fields.
 
-The installation and usage are still the same.
-The instructions below are still the same as in dmacfarlane/angular-mentions.
-The differences are in the additional optional config.
+[Click here to experiment on StackBlitz](https://stackblitz.com/edit/angular-mentions)
 
 To install and start the demo application:
 
@@ -63,6 +61,7 @@ The following optional configuration items can be used.
 | dropUp        | false    | Show the menu above the cursor instead of below. |
 | maxItems      | ∞        | Limit the number of items shown in the text. The default is no limit. |
 | mentionSelect |          | A function to format the selected item before inserting the text. |
+| mentionFilter |          | A function that returns the items to display. |
 | allowSpace    | false    | Allow spaces while mentioning. |
 | returnTrigger | false    | Include the trigger char in the searchTerm event. |
 | useMention | false    | Specify true if you want to use data from [mention] property instead of items array in this config. |
@@ -87,9 +86,18 @@ The following output events can be used.
 | `@Output() closed EventEmitter<void>`  | Event that is emitted when the mentions panel is closed.
 | `@Output() mentionsTabSelected EventEmitter<void>`  | Event that is emitted when the a tab is selected.
 
+
+### Item Templates
+
+The appearance of the items displayed in the mention list menu can be customized using the 
+`[mentionListTemplate]` directive as shown in this example:
+
+https://stackblitz.com/edit/angular-mentions-avatar
+
 ### Alternative Usage
 
-The component can also be used by only specifying the mentionConfig object:
+Instead of using the `[mentions]` directive, the component can also be used by only specifying
+`[mentionConfig]`, for example:
 
 ```html
 <input type="text" [mentionConfig]="mentionConfig">
@@ -117,8 +125,8 @@ let mentionConfig = {
         {
             items: [ "Red", "Yellow", "Green", ... ],
             triggerChar: '#'
-        },
-    }]
+        }
+    ]
 }
 ```
 This allows different lists and trigger characters to be configured.
