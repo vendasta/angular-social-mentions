@@ -1,5 +1,6 @@
 import {
-  Component, ElementRef, Output, EventEmitter, ViewChild, Input, TemplateRef, AfterContentChecked
+  Component, ElementRef, Output, EventEmitter, ViewChild, Input, TemplateRef, AfterContentChecked,
+  ChangeDetectorRef
 } from '@angular/core';
 
 import { isInputOrTextAreaElement, getContentEditableCaretCoords } from './mention-utils';
@@ -73,7 +74,17 @@ export class MentionListComponent implements AfterContentChecked {
 
   private coords: {top:number, left:number} = {top:0, left:0};
   private offset: number = 0;
-  constructor(private element: ElementRef) {}
+  constructor(private element: ElementRef, private changeDetectorRef: ChangeDetectorRef) {}
+
+  /**
+   * MentionDirective writes to this component's fields from the outside rather than
+   * through inputs. Angular 22 treats a component with no declared strategy as OnPush,
+   * so those writes have to mark the view dirty or the list renders once and then never
+   * updates. Callers invoke this after mutating state.
+   */
+  markForCheck(): void {
+    this.changeDetectorRef.markForCheck();
+  }
 
   ngAfterContentChecked() {
     if (!this.itemTemplate) {
@@ -132,6 +143,7 @@ export class MentionListComponent implements AfterContentChecked {
     }
     // select the next item
     this.activeIndex = Math.max(Math.min(this.activeIndex + 1, this.items.length - 1), 0);
+    this.markForCheck();
   }
 
   activatePreviousItem() {
@@ -149,6 +161,7 @@ export class MentionListComponent implements AfterContentChecked {
     }
     // select the previous item
     this.activeIndex = Math.max(Math.min(this.activeIndex - 1, this.items.length - 1), 0);
+    this.markForCheck();
   }
 
   // reset for a new mention search

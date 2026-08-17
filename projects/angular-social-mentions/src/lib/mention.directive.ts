@@ -240,6 +240,7 @@ export class MentionDirective implements OnChanges {
     else if (this.startPos >= 0 && this.searching) {
       if (pos <= this.startPos) {
         this.searchList.hidden = true;
+        this.searchList.markForCheck();
       }
       // ignore shift when pressed alone, but not when used with another key
       else if (event.keyCode !== KEY_SHIFT &&
@@ -362,6 +363,10 @@ export class MentionDirective implements OnChanges {
 
     this.activeConfig = null;
     this.searching = false;
+
+    if (this.searchList) {
+      this.searchList.markForCheck();
+    }
   }
 
   updateSearchList() {
@@ -384,6 +389,7 @@ export class MentionDirective implements OnChanges {
       this.searchList.items = matches;
       this.searchList.hidden = matches.length == 0;
       this.searchList.showPrompt = this.showMentionPrompt;
+      this.searchList.markForCheck();
     }
   }
 
@@ -423,6 +429,7 @@ export class MentionDirective implements OnChanges {
     this.searchList.tabs = this.activeConfig.tabs;
     this.searchList.showPrompt = this.showMentionPrompt;
     this.searchList.promptTemplate = this.mentionPromptTemplate;
+    this.searchList.markForCheck();
 
     window.requestAnimationFrame(() => this.searchList.reset());
   }
