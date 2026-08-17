@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Directive, ElementRef, TemplateRef, ViewContainerRef } from "@angular/core";
+import { Directive, ElementRef, TemplateRef, ViewContainerRef } from "@angular/core";
 import { EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
 import { getCaretPosition, getValue, insertValue, setCaretPosition } from './mention-utils';
 
@@ -93,7 +93,6 @@ export class MentionDirective implements OnChanges {
 
   constructor(
     private _element: ElementRef,
-    private _componentResolver: ComponentFactoryResolver,
     private _viewContainerRef: ViewContainerRef
   ) { }
 
@@ -392,8 +391,7 @@ export class MentionDirective implements OnChanges {
     this.opened.emit();
 
     if (this.searchList == null) {
-      let componentFactory = this._componentResolver.resolveComponentFactory(MentionListComponent);
-      let componentRef = this._viewContainerRef.createComponent(componentFactory);
+      const componentRef = this._viewContainerRef.createComponent(MentionListComponent);
       this.searchList = componentRef.instance;
       componentRef.instance['itemClick'].subscribe(() => {
         nativeElement.focus();
