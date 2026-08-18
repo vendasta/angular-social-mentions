@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, Directive, ElementRef, TemplateRef, ViewContainerRef } from "@angular/core";
+import { Directive, ElementRef, TemplateRef, ViewContainerRef } from "@angular/core";
 import { EventEmitter, Input, OnChanges, Output, SimpleChanges } from "@angular/core";
 import { getCaretPosition, getValue, insertValue, setCaretPosition } from './mention-utils';
 
@@ -93,7 +93,6 @@ export class MentionDirective implements OnChanges {
 
   constructor(
     private _element: ElementRef,
-    private _componentResolver: ComponentFactoryResolver,
     private _viewContainerRef: ViewContainerRef
   ) { }
 
@@ -241,6 +240,7 @@ export class MentionDirective implements OnChanges {
     else if (this.startPos >= 0 && this.searching) {
       if (pos <= this.startPos) {
         this.searchList.hidden = true;
+        this.searchList.markForCheck();
       }
       // ignore shift when pressed alone, but not when used with another key
       else if (event.keyCode !== KEY_SHIFT &&
@@ -363,6 +363,10 @@ export class MentionDirective implements OnChanges {
 
     this.activeConfig = null;
     this.searching = false;
+
+    if (this.searchList) {
+      this.searchList.markForCheck();
+    }
   }
 
   updateSearchList() {
@@ -385,6 +389,7 @@ export class MentionDirective implements OnChanges {
       this.searchList.items = matches;
       this.searchList.hidden = matches.length == 0;
       this.searchList.showPrompt = this.showMentionPrompt;
+      this.searchList.markForCheck();
     }
   }
 
@@ -392,8 +397,7 @@ export class MentionDirective implements OnChanges {
     this.opened.emit();
 
     if (this.searchList == null) {
-      let componentFactory = this._componentResolver.resolveComponentFactory(MentionListComponent);
-      let componentRef = this._viewContainerRef.createComponent(componentFactory);
+      const componentRef = this._viewContainerRef.createComponent(MentionListComponent);
       this.searchList = componentRef.instance;
       componentRef.instance['itemClick'].subscribe(() => {
         nativeElement.focus();
@@ -425,6 +429,7 @@ export class MentionDirective implements OnChanges {
     this.searchList.tabs = this.activeConfig.tabs;
     this.searchList.showPrompt = this.showMentionPrompt;
     this.searchList.promptTemplate = this.mentionPromptTemplate;
+    this.searchList.markForCheck();
 
     window.requestAnimationFrame(() => this.searchList.reset());
   }
